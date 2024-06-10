@@ -1,8 +1,8 @@
 from sensorGraphs.db_connect import cursor
 
 
-def dht_read_temperature():
-    sql = "SELECT temperature FROM dht_sensor ORDER BY id DESC LIMIT 1"
+def dht_read_data():
+    sql = "SELECT temperature, humidity FROM dht_sensor ORDER BY insertion_date DESC LIMIT 1"
     cursor.execute(sql)
-    temperature = cursor.fetchall()
-    return temperature
+    data = cursor.fetchall()
+    return data
