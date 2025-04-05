@@ -1,4 +1,4 @@
-from sensorGraphs.db_connect import cursor, db
+from db_connect import cursor, db
 
 
 def dht_write_data(tem, hum):

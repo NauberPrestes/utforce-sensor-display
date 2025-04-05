@@ -1,8 +1,10 @@
-from flask import Flask, request, Response
+from flask import Flask, request, Response, jsonify
+import time
 
-from sensorGraphs.dht_read import dht_read_data
-from sensorGraphs.dht_write import dht_write_data
-from sensorGraphs.db_write import db_write_data
+from dht_read import dht_read_data
+from dht_write import dht_write_data
+from db_write import db_write_data
+from db_read import db_read_data
 
 app = Flask(__name__)
 
@@ -37,6 +39,28 @@ def max_post_data():
 @app.get('/sensor/dht')
 def get_temperature():
     return dht_read_data()
+
+
+@app.get('/sensor/all')
+def get_all_sensor_data():
+    try:
+        dht_temperature_data = db_read_data('dht_sensor', 'temperature')
+        dht_humidity_data = db_read_data('dht_sensor', 'humidity')
+        
+        angle_data = db_read_data('angle_sensor', 'angle')
+        
+        max_data = db_read_data('max_sensor', 'temperature')
+        
+        sensor_data = {
+            "DHT - Temperatura": float(dht_temperature_data) if dht_temperature_data is not None else 0,
+            "DHT - Umidade": float(dht_humidity_data) if dht_humidity_data is not None else 0,
+            "MAX - Temperatura": float(max_data) if max_data is not None else 0,
+            "Volante - Ângulo": float(angle_data) if angle_data is not None else 0
+        }
+        
+        return jsonify(sensor_data)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 if __name__ == '__main__':

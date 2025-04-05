@@ -1,10 +1,10 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 
-String URL = "http://ip:5000/sensor";
+String URL = "http://192.168.100.6:5000/sensor";
 
 const char* ssid = "ssid";
-const char* password = "pass";
+const char* password = "password";
 
 int temperature;
 int humidity;
@@ -41,8 +41,6 @@ void loop() {
 
   delay(5000);
 }
-
-
 
 void connectWiFi() {
   WiFi.mode(WIFI_OFF);

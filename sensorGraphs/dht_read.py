@@ -1,4 +1,4 @@
-from sensorGraphs.db_connect import cursor
+from db_connect import cursor
 
 
 def dht_read_data():

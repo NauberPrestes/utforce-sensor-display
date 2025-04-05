@@ -1,4 +1,5 @@
-from sensorGraphs.db_connect import cursor, db
+from db_connect import cursor, db
+from psycopg import sql
 
 
 def db_write_data(table, column, value):
@@ -6,7 +7,7 @@ def db_write_data(table, column, value):
         "INSERT INTO {tab} ({col}) VALUES ({val})"
         .format(tab=table,
                 col=column,
-                val=value)
-    )
+                val=value
+                ))
 
     db.commit()
